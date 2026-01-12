@@ -1,0 +1,5 @@
+bot_token: "YOUR_TOKEN_HERE"
+chat_channel_id: "YOUR_CHANNEL_ID_HERE"
+join_message_format: "**{PLAYER}** has joined the game."
+quit_message_format: "**{PLAYER}** has left the game."
+chat_message_format: "**{PLAYER}**: {MESSAGE}"

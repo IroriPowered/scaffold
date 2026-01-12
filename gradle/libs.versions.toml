@@ -1,0 +1,13 @@
+[versions]
+gradle-shadow = "9.3.1"
+jda = "6.3.0"
+slf4j = "2.0.17"
+paper = "1.21.11-R0.1-SNAPSHOT"
+
+[libraries]
+jda = { group = "net.dv8tion", name = "JDA", version.ref = "jda" }
+slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
+paper-api = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper" }
+
+[plugins]
+gradle-shadow = { id = "com.gradleup.shadow", version.ref = "gradle-shadow" }

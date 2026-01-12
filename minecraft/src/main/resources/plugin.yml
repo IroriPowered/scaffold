@@ -1,0 +1,5 @@
+name: Scaffold-Minecraft
+version: 1.0.0
+main: cc.irori.scaffold.minecraft.MinecraftPlugin
+author: KabanFriends
+api-version: '1.21.11'
