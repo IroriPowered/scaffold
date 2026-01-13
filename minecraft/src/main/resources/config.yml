@@ -1,7 +1,7 @@
-bot_token: "YOUR_TOKEN_HERE"
-chat_channel_id: "YOUR_CHANNEL_ID_HERE"
-use_japanize: true
-join_message_format: "**{PLAYER}** has joined the game."
-quit_message_format: "**{PLAYER}** has left the game."
-chat_message_format: "**{PLAYER}**: {MESSAGE}"
-chat_message_format_japanize: "**{PLAYER}**: {MESSAGE} (`{JAPANESE}`)"
+BotToken: "YOUR_TOKEN_HERE"
+ChatChannelId: "YOUR_CHANNEL_ID_HERE"
+UseJapanize: true
+JoinMessageFormat: "**{PLAYER}** has joined the game."
+QuitMessageFormat: "**{PLAYER}** has left the game."
+ChatMessageFormat: "**{PLAYER}**: {MESSAGE}"
+ChatMessageFormatJapanize: "**{PLAYER}**: {MESSAGE} (`{JAPANESE}`)"

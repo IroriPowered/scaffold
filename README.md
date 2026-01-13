@@ -9,6 +9,8 @@ A barebones Discord chat bridge plugin for Hytale servers. Join/quit messages an
   - (I hope that a more complete Discord bridge plugin will be written by developers better than me)
 
 # building
+First, place a copy of `HytaleServer.jar` in the `hytale/libs/` directory.
+
 Java 25 is recommended. Use the following command to compile the scaffold plugin:
 ```sh
 ./gradlew build
@@ -21,3 +23,7 @@ This project borrows the codes from [LunaChat](https://github.com/ucchyocean/Lun
 > 
 > For the specific codes, see:
 > `discord/src/main/java/cc/irori/scaffold/discord/japanize/YukiKanaConverter.java`
+
+# todo
+- [ ] Move to Hytale's official maven artifact for HytaleServer
+- [ ] SLF4J-based logging needs to be abstracted as HytaleServer's logging system is not compatible with it

@@ -1,20 +1,17 @@
 {
-  "Group": "cc.irori",
-  "Name": "Scaffold-Hytale",
+  "Group": "IroriPowered",
+  "Name": "Scaffold_Hytale",
   "Version": "1.0.0",
+  "Website": "https://www.irori.cc/",
   "Description": "Forward in-game chat messages to Discord!",
+  "Main": "cc.irori.scaffold.hytale.HytalePlugin",
   "Authors": [
     {
       "Name": "KabanFriends",
       "Url": "https://github.com/KabanFriends"
-    },
-    {
-      "Name": "IroriPowered",
-      "Url": "https://www.irori.cc"
     }
   ],
   "ServerVersion": "*",
-  "Dependencies": [],
-  "OptionalDependencies": [],
-  "DisabledByDefault": false
+  "Dependencies": {},
+  "OptionalDependencies": {}
 }
