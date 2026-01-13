@@ -13,3 +13,11 @@ Java 25 is recommended. Use the following command to compile the scaffold plugin
 ```sh
 ./gradlew build
 ```
+
+# license notice
+This project borrows the codes from [LunaChat](https://github.com/ucchyocean/LunaChat/) for the optional Japanese converter feature. 
+> Portions Copyright (c) ucchyocean and LunaChat contributors  
+> Licensed under LGPL-3.0
+> 
+> For the specific codes, see:
+> `discord/src/main/java/cc/irori/scaffold/discord/japanize/YukiKanaConverter.java`

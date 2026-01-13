@@ -2,6 +2,9 @@ package cc.irori.scaffold.discord.bot;
 
 import cc.irori.scaffold.discord.Scaffold;
 import cc.irori.scaffold.discord.config.ConfigKey;
+import cc.irori.scaffold.discord.japanize.GoogleConverter;
+import cc.irori.scaffold.discord.japanize.Japanizer;
+import cc.irori.scaffold.discord.japanize.YukiKanaConverter;
 import cc.irori.scaffold.discord.util.Logs;
 import cc.irori.scaffold.discord.util.StringUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -14,6 +17,8 @@ import org.slf4j.Logger;
 
 import java.awt.*;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class BotService {
 
@@ -21,6 +26,7 @@ public class BotService {
     private static final Color EMBED_QUIT_COLOR = new Color(0xFF5555);
 
     private static final Logger LOGGER = Logs.logger();
+    private static final ExecutorService EXECUTOR = Executors.newScheduledThreadPool(1);
 
     private final Scaffold scaffold;
     private final JDA jda;
@@ -75,15 +81,27 @@ public class BotService {
     }
 
     public void onPlayerChat(String playerName, String message) {
-        TextChannel channel = jda.getTextChannelById(scaffold.config().get(ConfigKey.CHAT_CHANNEL_ID));
-        if (channel == null) {
-            LOGGER.warn("Tried to send message to an invalid channel");
-            return;
-        }
+        EXECUTOR.submit(() -> {
+            TextChannel channel = jda.getTextChannelById(scaffold.config().get(ConfigKey.CHAT_CHANNEL_ID));
+            if (channel == null) {
+                LOGGER.warn("Tried to send message to an invalid channel");
+                return;
+            }
 
-        String formattedMessage = scaffold.config().get(ConfigKey.CHAT_MESSAGE_FORMAT)
-                .replace("{PLAYER}", StringUtil.escapeDiscordMarkdown(playerName))
-                .replace("{MESSAGE}", StringUtil.escapeDiscordMarkdown(message));
-        channel.sendMessage(formattedMessage).queue();
+            String formattedMessage = scaffold.config().get(ConfigKey.CHAT_MESSAGE_FORMAT)
+                    .replace("{PLAYER}", StringUtil.escapeDiscordMarkdown(playerName))
+                    .replace("{MESSAGE}", StringUtil.escapeDiscordMarkdown(message));
+            if (scaffold.config().get(ConfigKey.USE_JAPANIZE)) {
+                String japanized = Japanizer.japanizeString(message);
+                if (japanized != null) {
+                    formattedMessage = scaffold.config().get(ConfigKey.CHAT_MESSAGE_FORMAT_JAPANIZE)
+                            .replace("{PLAYER}", StringUtil.escapeDiscordMarkdown(playerName))
+                            .replace("{MESSAGE}", StringUtil.escapeDiscordMarkdown(message))
+                            .replace("{JAPANESE}", StringUtil.escapeDiscordMarkdown(japanized));
+                }
+            }
+
+            channel.sendMessage(formattedMessage).queue();
+        });
     }
 }
