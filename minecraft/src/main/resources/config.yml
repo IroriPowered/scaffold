@@ -7,4 +7,4 @@ JoinMessageFormat: "**{PLAYER}** has joined the game."
 QuitMessageFormat: "**{PLAYER}** has left the game."
 ChatMessageFormat: "**{PLAYER}**: {MESSAGE}"
 ChatMessageFormatJapanize: "**{PLAYER}**: {MESSAGE} (`{JAPANESE}`)"
-UseJapanize: true
+UseJapanize: false

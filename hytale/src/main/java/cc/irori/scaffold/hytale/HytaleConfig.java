@@ -24,7 +24,7 @@ public class HytaleConfig implements ConfigProvider {
             .put(ConfigKey.QUIT_MESSAGE_FORMAT, "**{PLAYER}** has left the game.")
             .put(ConfigKey.CHAT_MESSAGE_FORMAT, "**{PLAYER}**: {MESSAGE}")
             .put(ConfigKey.CHAT_MESSAGE_FORMAT_JAPANIZE, "**{PLAYER}**: {MESSAGE} (`{JAPANESE}`)")
-            .put(ConfigKey.USE_JAPANIZE, true)
+            .put(ConfigKey.USE_JAPANIZE, false)
             .build();
 
     static {
