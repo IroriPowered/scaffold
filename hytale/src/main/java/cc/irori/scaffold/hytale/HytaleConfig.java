@@ -9,7 +9,6 @@ import com.hypixel.hytale.codec.builder.BuilderCodec;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class HytaleConfig implements ConfigProvider {
 
@@ -18,11 +17,14 @@ public class HytaleConfig implements ConfigProvider {
     private static final Map<ConfigKey<?>, Object> DEFAULT_CONFIG = ImmutableMap.<ConfigKey<?>, Object>builder()
             .put(ConfigKey.BOT_TOKEN, "YOUR_TOKEN_HERE")
             .put(ConfigKey.CHAT_CHANNEL_ID, "YOUR_CHANNEL_ID_HERE")
-            .put(ConfigKey.USE_JAPANIZE, true)
+            .put(ConfigKey.STATUS_CHANNEL_ID, "YOUR_CHANNEL_ID_HERE")
+            .put(ConfigKey.STATUS_FORMAT, "Players: {ONLINE}/{MAX}")
+            .put(ConfigKey.SMALL_STATUS_FORMAT, "{ONLINE}/{MAX}")
             .put(ConfigKey.JOIN_MESSAGE_FORMAT, "**{PLAYER}** has joined the game.")
             .put(ConfigKey.QUIT_MESSAGE_FORMAT, "**{PLAYER}** has left the game.")
             .put(ConfigKey.CHAT_MESSAGE_FORMAT, "**{PLAYER}**: {MESSAGE}")
             .put(ConfigKey.CHAT_MESSAGE_FORMAT_JAPANIZE, "**{PLAYER}**: {MESSAGE} (`{JAPANESE}`)")
+            .put(ConfigKey.USE_JAPANIZE, true)
             .build();
 
     static {

@@ -39,6 +39,10 @@ public abstract class Scaffold {
 
     public abstract void sendChatMessage(String sender, String message);
 
+    public abstract int getCurrentPlayers();
+
+    public abstract int getMaxPlayers();
+
     public static Scaffold getInstance() {
         return instance;
     }

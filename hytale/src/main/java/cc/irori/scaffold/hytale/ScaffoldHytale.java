@@ -3,6 +3,7 @@ package cc.irori.scaffold.hytale;
 import cc.irori.scaffold.discord.Scaffold;
 import cc.irori.scaffold.discord.config.ConfigProvider;
 import cc.irori.scaffold.discord.util.Logs;
+import com.hypixel.hytale.server.core.HytaleServer;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerConnectEvent;
@@ -24,10 +25,14 @@ public class ScaffoldHytale extends Scaffold {
         this.config = config;
 
         plugin.getEventRegistry().register(PlayerConnectEvent.class, event -> {
-            this.bot().onPlayerJoin(event.getPlayerRef().getUsername());
+            int players = Universe.get().getPlayerCount();
+            this.bot().onPlayerJoin(event.getPlayerRef().getUsername(), players);
+            this.bot().setPlayerCount(players);
         });
         plugin.getEventRegistry().register(PlayerDisconnectEvent.class, event -> {
-            this.bot().onPlayerQuit(event.getPlayerRef().getUsername());
+            int players = Universe.get().getPlayerCount() - 1;
+            this.bot().onPlayerQuit(event.getPlayerRef().getUsername(), players);
+            this.bot().setPlayerCount(players);
         });
         plugin.getEventRegistry().registerAsyncGlobal(PlayerChatEvent.class, future -> future.thenApply(event -> {
             this.bot().onPlayerChat(event.getSender().getUsername(), event.getContent());
@@ -46,5 +51,15 @@ public class ScaffoldHytale extends Scaffold {
                 Message.raw("[D] @" + sender + ": ").color(DISCORD_PREFIX_COLOR),
                 Message.raw(message)
         ));
+    }
+
+    @Override
+    public int getCurrentPlayers() {
+        return Universe.get().getPlayerCount();
+    }
+
+    @Override
+    public int getMaxPlayers() {
+        return HytaleServer.get().getConfig().getMaxPlayers();
     }
 }

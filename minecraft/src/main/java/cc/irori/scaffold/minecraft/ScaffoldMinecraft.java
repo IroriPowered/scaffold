@@ -31,4 +31,14 @@ public class ScaffoldMinecraft extends Scaffold {
                 Component.text(message, NamedTextColor.GRAY)
         ));
     }
+
+    @Override
+    public int getCurrentPlayers() {
+        return Bukkit.getOnlinePlayers().size();
+    }
+
+    @Override
+    public int getMaxPlayers() {
+        return Bukkit.getMaxPlayers();
+    }
 }

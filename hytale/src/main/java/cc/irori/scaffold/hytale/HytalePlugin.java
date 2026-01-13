@@ -18,8 +18,9 @@ public class HytalePlugin extends JavaPlugin {
 
     @Override
     protected void start() {
-        config.load().join(); // Maybe I don't want it blocking?
-        config.save();
+        // Maybe I don't want these blocking?
+        config.load().join();
+        config.save().join();
 
         this.scaffold = new ScaffoldHytale(this, config.get());
         this.scaffold.enable();

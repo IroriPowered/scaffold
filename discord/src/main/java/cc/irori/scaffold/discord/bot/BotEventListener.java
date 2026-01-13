@@ -25,6 +25,7 @@ public class BotEventListener implements EventListener {
     public void onEvent(@NotNull GenericEvent event) {
         if (event instanceof ReadyEvent readyEvent) {
             LOGGER.info("Bot is ready! Logged in as: {}", readyEvent.getJDA().getSelfUser().getAsTag());
+            scaffold.bot().login();
         } else if (event instanceof MessageReceivedEvent messageEvent) {
             if (messageEvent.getChannel().getId().equals(scaffold.config().get(ConfigKey.CHAT_CHANNEL_ID))) {
                 if (messageEvent.getAuthor().isBot()) {

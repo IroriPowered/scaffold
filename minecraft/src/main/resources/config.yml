@@ -1,7 +1,10 @@
 BotToken: "YOUR_TOKEN_HERE"
 ChatChannelId: "YOUR_CHANNEL_ID_HERE"
-UseJapanize: true
+StatusChannelId: "YOUR_CHANNEL_ID_HERE"
+StatusFormat: "Players: {ONLINE}/{MAX}"
+SmallStatusFormat: "Players: {ONLINE}/{MAX}"
 JoinMessageFormat: "**{PLAYER}** has joined the game."
 QuitMessageFormat: "**{PLAYER}** has left the game."
 ChatMessageFormat: "**{PLAYER}**: {MESSAGE}"
 ChatMessageFormatJapanize: "**{PLAYER}**: {MESSAGE} (`{JAPANESE}`)"
+UseJapanize: true
