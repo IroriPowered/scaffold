@@ -28,8 +28,8 @@ public class BotService {
 
     private static final Logger LOGGER = Logs.logger();
 
-    private static final ExecutorService CHAT_EXECUTOR = Executors.newFixedThreadPool(1);
-    private static final ScheduledExecutorService STATUS_EXECUTOR = Executors.newScheduledThreadPool(1);
+    private final ExecutorService chatExecutor = Executors.newFixedThreadPool(1);
+    private final ScheduledExecutorService statusExecutor = Executors.newScheduledThreadPool(1);
 
     private final Scaffold scaffold;
     private final JDA jda;
@@ -69,7 +69,7 @@ public class BotService {
 
     public void login() {
         scaffold.bot().setPlayerCount(0);
-        STATUS_EXECUTOR.scheduleAtFixedRate(() -> {
+        statusExecutor.scheduleAtFixedRate(() -> {
             scaffold.bot().setPlayerCount(scaffold.getCurrentPlayers());
         }, 1, 1, TimeUnit.MINUTES);
     }
@@ -79,8 +79,8 @@ public class BotService {
         scaffold.bot().setPlayerCount(0);
         jda.shutdown();
 
-        CHAT_EXECUTOR.shutdown();
-        STATUS_EXECUTOR.shutdown();
+        chatExecutor.shutdown();
+        statusExecutor.shutdown();
         statusCacheAction.shutdown();
     }
 
@@ -135,7 +135,7 @@ public class BotService {
     }
 
     public void onPlayerChat(String playerName, String message) {
-        CHAT_EXECUTOR.submit(() -> {
+        chatExecutor.submit(() -> {
             String id = scaffold.config().get(ConfigKey.CHAT_CHANNEL_ID);
             if (id.isEmpty()) {
                 return;
