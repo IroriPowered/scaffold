@@ -5,6 +5,7 @@ import cc.irori.scaffold.discord.config.ConfigKey;
 import cc.irori.scaffold.discord.japanize.Japanizer;
 import cc.irori.scaffold.discord.util.Logs;
 import cc.irori.scaffold.discord.util.StringUtil;
+import cc.irori.shodo.ShodoAPI;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -76,7 +77,6 @@ public class BotService {
 
     public void shutdown() {
         LOGGER.info("Shutting down Scaffold Discord bot...");
-        scaffold.bot().setPlayerCount(0);
         jda.shutdown();
 
         chatExecutor.shutdown();
@@ -156,6 +156,14 @@ public class BotService {
                             .replace("{PLAYER}", StringUtil.escapeDiscordMarkdown(playerName))
                             .replace("{MESSAGE}", StringUtil.escapeDiscordMarkdown(message))
                             .replace("{JAPANESE}", StringUtil.escapeDiscordMarkdown(japanized));
+
+                    if (scaffold.isShodoAvailable()) {
+                        ShodoAPI.getInstance().broadcastMessage(playerName + ": " + japanized);
+                    }
+                } else {
+                    if (scaffold.isShodoAvailable()) {
+                        ShodoAPI.getInstance().broadcastMessage(playerName + ": " + message);
+                    }
                 }
             }
 

@@ -38,6 +38,11 @@ public class ScaffoldMinecraft extends Scaffold {
     }
 
     @Override
+    public boolean isShodoAvailable() {
+        return false;
+    }
+
+    @Override
     public int getMaxPlayers() {
         return Bukkit.getMaxPlayers();
     }

@@ -43,6 +43,8 @@ public abstract class Scaffold {
 
     public abstract int getMaxPlayers();
 
+    public abstract boolean isShodoAvailable();
+
     public static Scaffold getInstance() {
         return instance;
     }

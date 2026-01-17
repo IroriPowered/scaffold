@@ -3,6 +3,9 @@ package cc.irori.scaffold.hytale;
 import cc.irori.scaffold.discord.Scaffold;
 import cc.irori.scaffold.discord.config.ConfigProvider;
 import cc.irori.scaffold.discord.util.Logs;
+import cc.irori.shodo.ShodoAPI;
+import com.hypixel.hytale.common.plugin.PluginIdentifier;
+import com.hypixel.hytale.common.semver.SemverRange;
 import com.hypixel.hytale.server.core.HytaleServer;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent;
@@ -19,6 +22,8 @@ import java.util.concurrent.TimeUnit;
 public class ScaffoldHytale extends Scaffold {
 
     private static final Color DISCORD_PREFIX_COLOR = new Color(0x7070FF);
+
+    private static final PluginIdentifier SHODO_PLUGIN = new PluginIdentifier("IroriPowered", "Shodo");
 
     private static final Logger LOGGER = Logs.logger();
 
@@ -59,6 +64,10 @@ public class ScaffoldHytale extends Scaffold {
                 Message.raw("[D] @" + sender + ": ").color(DISCORD_PREFIX_COLOR),
                 Message.raw(message)
         ));
+
+        if (isShodoAvailable()) {
+            ShodoAPI.getInstance().broadcastMessage("[D] @" + sender + ": " + message, DISCORD_PREFIX_COLOR);
+        }
     }
 
     @Override
@@ -69,6 +78,11 @@ public class ScaffoldHytale extends Scaffold {
     @Override
     public int getMaxPlayers() {
         return HytaleServer.get().getConfig().getMaxPlayers();
+    }
+
+    @Override
+    public boolean isShodoAvailable() {
+        return HytaleServer.get().getPluginManager().hasPlugin(SHODO_PLUGIN, SemverRange.WILDCARD);
     }
 
     @Override

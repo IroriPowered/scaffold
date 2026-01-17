@@ -3,10 +3,6 @@ plugins {
     alias(libs.plugins.gradle.shadow)
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation(libs.jda)
 
@@ -14,4 +10,5 @@ dependencies {
     compileOnly(libs.lang3)
     compileOnly(libs.gson)
     compileOnly(libs.slf4j.api)
+    compileOnly(libs.shodo)
 }
