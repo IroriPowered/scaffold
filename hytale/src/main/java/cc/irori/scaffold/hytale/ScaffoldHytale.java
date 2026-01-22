@@ -15,6 +15,9 @@ import com.hypixel.hytale.server.core.universe.Universe;
 import org.slf4j.Logger;
 
 import java.awt.*;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -25,8 +28,7 @@ public class ScaffoldHytale extends Scaffold {
 
     private static final PluginIdentifier SHODO_PLUGIN = new PluginIdentifier("IroriPowered", "Shodo");
 
-    private static final Logger LOGGER = Logs.logger();
-
+    private final Set<UUID> players = ConcurrentHashMap.newKeySet();
     private final ScheduledExecutorService eventExecutor = Executors.newScheduledThreadPool(1);
     private final HytaleConfig config;
 
@@ -35,16 +37,20 @@ public class ScaffoldHytale extends Scaffold {
 
         plugin.getEventRegistry().register(PlayerConnectEvent.class, event -> {
             eventExecutor.schedule(() -> {
-                int players = Universe.get().getPlayerCount();
-                this.bot().onPlayerJoin(event.getPlayerRef().getUsername(), players);
-                this.bot().setPlayerCount(players);
+                if (players.add(event.getPlayerRef().getUuid())) {
+                    int players = Universe.get().getPlayerCount();
+                    this.bot().onPlayerJoin(event.getPlayerRef().getUsername(), players);
+                    this.bot().setPlayerCount(players);
+                }
             }, 2L, TimeUnit.SECONDS);
         });
         plugin.getEventRegistry().register(PlayerDisconnectEvent.class, event -> {
             eventExecutor.schedule(() -> {
-                int players = Universe.get().getPlayerCount();
-                this.bot().onPlayerQuit(event.getPlayerRef().getUsername(), players);
-                this.bot().setPlayerCount(players);
+                if (players.remove(event.getPlayerRef().getUuid())) {
+                    int players = Universe.get().getPlayerCount();
+                    this.bot().onPlayerQuit(event.getPlayerRef().getUsername(), players);
+                    this.bot().setPlayerCount(players);
+                }
             }, 2L, TimeUnit.SECONDS);
         });
         plugin.getEventRegistry().registerAsyncGlobal(PlayerChatEvent.class, future -> future.thenApply(event -> {
