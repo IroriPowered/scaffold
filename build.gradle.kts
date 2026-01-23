@@ -3,8 +3,10 @@ plugins {
     alias(libs.plugins.gradle.shadow) apply false
 }
 
-group = "cc.irori.scaffold"
-version = "1.0-SNAPSHOT"
+allprojects {
+    group = "cc.irori.scaffold"
+    version = "1.0-SNAPSHOT"
+}
 
 subprojects {
     repositories {

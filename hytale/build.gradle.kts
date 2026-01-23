@@ -1,6 +1,11 @@
 plugins {
     id("java")
+    id("base")
     alias(libs.plugins.gradle.shadow)
+}
+
+base {
+    archivesName.set("scaffold-hytale")
 }
 
 repositories {
