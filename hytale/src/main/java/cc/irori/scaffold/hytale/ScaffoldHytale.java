@@ -35,22 +35,24 @@ public class ScaffoldHytale extends Scaffold {
         this.config = config;
 
         plugin.getEventRegistry().register(PlayerConnectEvent.class, event -> {
-            eventExecutor.schedule(() -> {
-                if (players.add(event.getPlayerRef().getUuid())) {
+            if (players.add(event.getPlayerRef().getUuid())) {
+                eventExecutor.schedule(() -> {
+
                     int players = Universe.get().getPlayerCount();
                     this.bot().onPlayerJoin(event.getPlayerRef().getUsername(), players);
                     this.bot().setPlayerCount(players);
-                }
-            }, 2L, TimeUnit.SECONDS);
+                }, 2L, TimeUnit.SECONDS);
+            }
         });
         plugin.getEventRegistry().register(PlayerDisconnectEvent.class, event -> {
-            eventExecutor.schedule(() -> {
-                if (players.remove(event.getPlayerRef().getUuid())) {
+            if (players.remove(event.getPlayerRef().getUuid())) {
+                eventExecutor.schedule(() -> {
+
                     int players = Universe.get().getPlayerCount();
                     this.bot().onPlayerQuit(event.getPlayerRef().getUsername(), players);
                     this.bot().setPlayerCount(players);
-                }
-            }, 2L, TimeUnit.SECONDS);
+                }, 2L, TimeUnit.SECONDS);
+            }
         });
         plugin.getEventRegistry().registerAsyncGlobal(PlayerChatEvent.class, future -> future.thenApply(event -> {
             this.bot().onPlayerChat(event.getSender().getUsername(), event.getContent());
