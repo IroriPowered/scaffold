@@ -2,7 +2,6 @@ package cc.irori.scaffold.hytale;
 
 import cc.irori.scaffold.discord.Scaffold;
 import cc.irori.scaffold.discord.config.ConfigProvider;
-import cc.irori.scaffold.discord.util.Logs;
 import cc.irori.shodo.ShodoAPI;
 import com.hypixel.hytale.common.plugin.PluginIdentifier;
 import com.hypixel.hytale.common.semver.SemverRange;
@@ -19,7 +18,6 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class ScaffoldHytale extends Scaffold {
 
@@ -36,22 +34,14 @@ public class ScaffoldHytale extends Scaffold {
 
         plugin.getEventRegistry().register(PlayerConnectEvent.class, event -> {
             if (players.add(event.getPlayerRef().getUuid())) {
-                eventExecutor.schedule(() -> {
-
-                    int players = Universe.get().getPlayerCount();
-                    this.bot().onPlayerJoin(event.getPlayerRef().getUsername(), players);
-                    this.bot().setPlayerCount(players);
-                }, 2L, TimeUnit.SECONDS);
+                this.bot().onPlayerJoin(event.getPlayerRef().getUsername(), players.size());
+                this.bot().setPlayerCount(players.size());
             }
         });
         plugin.getEventRegistry().register(PlayerDisconnectEvent.class, event -> {
             if (players.remove(event.getPlayerRef().getUuid())) {
-                eventExecutor.schedule(() -> {
-
-                    int players = Universe.get().getPlayerCount();
-                    this.bot().onPlayerQuit(event.getPlayerRef().getUsername(), players);
-                    this.bot().setPlayerCount(players);
-                }, 2L, TimeUnit.SECONDS);
+                this.bot().onPlayerQuit(event.getPlayerRef().getUsername(), players.size());
+                this.bot().setPlayerCount(players.size());
             }
         });
         plugin.getEventRegistry().registerAsyncGlobal(PlayerChatEvent.class, future -> future.thenApply(event -> {
