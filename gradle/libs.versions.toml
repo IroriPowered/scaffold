@@ -5,7 +5,7 @@ slf4j = "2.0.17"
 guava = "33.5.0-jre"
 lang3 = "3.20.0"
 gson = "2.13.2"
-hytale = "2026.01.22-6f8bdbdc4"
+hytale = "2026.03.23-338988e70"
 paper = "1.21.11-R0.1-SNAPSHOT"
 shodo = "1.1.0-SNAPSHOT"
 
